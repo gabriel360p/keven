@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use App\Http\Requests\ProdutoRequest;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -33,7 +34,7 @@ class ProdutoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProdutoRequest $request)
     {
         Produto::create($request->all());
         return redirect(route('dashboard'));
@@ -47,7 +48,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        //
+        return view('produtos.show',['produto'=>$produto]);
     }
 
     /**
@@ -81,6 +82,7 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        $produto->delete();
+        return back();
     }
 }

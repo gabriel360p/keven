@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     
     Route::resource('produtos', ProdutoController::class);
+    Route::get('produto/destroy/{produto}',[ProdutoController::class,'destroy'])->name('produto.destroy');
     
     Route::resource('categorias', CategoriaController::class);
 });

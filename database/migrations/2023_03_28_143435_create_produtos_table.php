@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nome');
             $table->text('descricao');
             $table->float('preco');
-            $table->foreignId('categoria_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('categoria_id')->constrained()->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class ProdutoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,24 @@ class ProdutoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome'=>'required|string',
+            'descricao'=>'required|string',
+            'preco'=>'required|numeric',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.required'=>'É necessário inserir um nome ao produto',
+            'nome.string'=>'Este campo precisa ser preenchido com string',
+
+            'descricao.required'=>'É necessário inserir uma descricao ao produto',
+            'descricao.string'=>'Este campo precisa ser preenchido com string',
+
+            'preco.required'=>'É preciso inserir um valor padrão ao produto',
+            'preco.number'=>'É preciso inserir um valor padrão ao produto',
+
         ];
     }
 }
