@@ -14,9 +14,20 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login()
+    public function login(Request $request)
     {
-        //login
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('dashboard');
+        }else{
+            return back()->with('errorAuthenticate','Credenciais não encontradas');
+        }
     }
 
     /**
@@ -24,9 +35,15 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register()
+    public function register(Request $request)
     {
         // User::create($request->all);
+        $request->validate([
+            'name'=>['required'],
+            'email'=>['required','email'],
+            'password'=>['required','confirmed','min:8'],
+        ]);
+
         User::create([
             'name'=>$request->name,
             'email'=>$request->email,
@@ -42,7 +59,7 @@ class AuthController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function logout(User $user)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();

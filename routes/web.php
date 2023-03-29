@@ -18,12 +18,15 @@ use App\Http\Controllers\CategoriaController;
 */
 Route::view('/','welcome');
 
-Route::view('login','auth.login');
-Route::view('register','auth.register');
+Route::view('login','auth.login')->name('login');
+Route::view('register','auth.register')->name('register');
+Route::post('deflogin', [AuthController::class,'login'])->name('deflogin');
+Route::post('defregister', [AuthController::class,'register'])->name('defregister');
+Route::get('deflogout', [AuthController::class,'logout'])->name('deflogout');
 
-Route::resource('auth', AuthController::class);
+// Route::resource('auth', AuthController::class);
 
-// Route::middleware(['auth', 'second'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     
     Route::resource('users', UserController::class);
@@ -31,4 +34,4 @@ Route::resource('auth', AuthController::class);
     Route::resource('produtos', ProdutoController::class);
     
     Route::resource('categorias', CategoriaController::class);
-// });
+});
