@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -47,7 +48,8 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        $produtos=\DB::table('produtos')->where('categoria_id','=',$categoria->id)->get();
+        return view('categorias.show',['produtos'=>$produtos,'categoria'=>$categoria]);
     }
 
     /**

@@ -31,15 +31,15 @@
                         {{-- </tr> --}}
                     </thead>
                     <tbody>
-                        <tr class="">
-                            @php
-                                use App\Models\Categoria;
-                                use App\Models\Produto;
-                                $produtos = Produto::all();
-                                $categorias = Categoria::all();
-                            @endphp
+                        @php
+                            use App\Models\Categoria;
+                            use App\Models\Produto;
+                            $produtos = Produto::all();
+                            $categorias = Categoria::all();
+                        @endphp
 
-                            @forelse ($produtos as $produto)
+                        @forelse ($produtos as $produto)
+                            <tr class="">
                                 <td>{{$produto->nome}}</td>
                                 <td>{{$produto->descricao}}</td>
                                 <td>{{$produto->preco}}</td>
@@ -55,9 +55,10 @@
                                 </td>
                             @empty
                                 <span class=" badge text-bg-warning">Nenhum produto encontrado</span>
-                            @endforelse
+                                
+                            </tr>
+                        @endforelse
 
-                        </tr>
                     </tbody>
                 </table>
             </div>

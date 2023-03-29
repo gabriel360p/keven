@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
           @yield('navbar')
             <div class="container">
-            <a class="navbar-brand" href="#">Study</a>
+            <a class="navbar-brand" href="{{route('dashboard')}}">Study</a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
               aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
