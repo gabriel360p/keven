@@ -23,6 +23,7 @@
                 <table class="table table-primary">
                     <thead>
                         {{-- <tr> --}}
+                            <th scope="col">Foto</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Descricao</th>
                             <th scope="col">Preço</th>
@@ -40,6 +41,11 @@
 
                         @forelse ($produtos as $produto)
                             <tr class="">
+                                <td>
+                                    {{-- {{dd($produto->foto)}} --}}
+                                    <img src="{{Storage::url($produto->foto)}}" alt="" style="width: 150px">
+                                </td>
+
                                 <td>{{$produto->nome}}</td>
                                 <td>{{$produto->descricao}}</td>
                                 <td>{{$produto->preco}}</td>

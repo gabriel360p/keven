@@ -9,12 +9,12 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('produtos.store')}}" method="POST">
+        <form action="{{route('produtos.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
               <label for="" class="form-label">Nome</label>
               <input type="text"
-                class="form-control" name="nome" id="" aria-describedby="helpId" placeholder="">
+                class="form-control" name="nome" id="" aria-describedby="helpId" placeholder="" value="{{@old('nome')}}">
               <small id="helpId" class="form-text text-muted">Nome do produto</small>
               
               @error('nome')
@@ -27,7 +27,7 @@
             <div class="mb-3">
                 <label for="" class="form-label">Descrição</label>
                 <input type="text"
-                  class="form-control" name="descricao" id="" aria-describedby="helpId" placeholder="">
+                  class="form-control" name="descricao" id="" aria-describedby="helpId" placeholder="" value="{{@old('descricao')}}">
                 <small id="helpId" class="form-text text-muted">Descrição do produto</small>
 
                 @error('descricao')
@@ -39,7 +39,7 @@
               <div class="mb-3">
                 <label for="" class="form-label">Preço</label>
                 <input type="number"
-                  class="form-control" name="preco" id="" aria-describedby="helpId" placeholder="">
+                  class="form-control" name="preco" id="" aria-describedby="helpId" placeholder="" value="{{@old('preco')}}">
                 <small id="helpId" class="form-text text-muted">Preço do produto</small>
 
                 @error('preco')
@@ -49,8 +49,17 @@
               </div>
 
               <div class="mb-3">
+                <label for="" class="form-label">Upload de foto</label>
+                <input type="file" class="form-control" name="foto" id="" placeholder="" aria-describedby="fileHelpId" required value="{{@old('foto')}}">
+                <div id="fileHelpId" class="form-text">Adicionar foto do produto</div>
+                @if ($message=Session::get('fileError'))
+                    <span class="badge text-bg-warning">{{$message}}</span>
+                @endif
+              </div>
+
+              <div class="mb-3">
                 <label for="" class="form-label">Categoria</label>
-                <select class="form-select form-select-lg" name="categoria_id" id="" required>
+                <select class="form-select form-select-lg" name="categoria_id" id="" required value="{{@old('categoria_id')}}">
                     @php
                         use App\Models\Categoria;
                         $categorias=Categoria::all();

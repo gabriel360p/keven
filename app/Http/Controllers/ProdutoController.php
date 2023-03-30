@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Http\Requests\ProdutoRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -36,8 +38,32 @@ class ProdutoController extends Controller
      */
     public function store(ProdutoRequest $request)
     {
-        Produto::create($request->all());
-        return redirect(route('dashboard'));
+        if($request->foto->isValid()){
+            $fileName = Hash::make($request->foto->getClientOriginalName()).'.'.$request->foto->getClientOriginalExtension();
+
+            $foto=Storage::putFileAs('public',$request->foto,$fileName);
+
+
+            // $imagem=$request->foto;
+            // $imagemnome=$request->foto->getClientOriginalName();
+            // $imagemextensao=$request->foto->getClientOriginalExtension();
+            // $img=Hash::make($imagemnome)." ".$imagemextensao;
+            // $foto=$request->foto->storeAs('public',$img);
+
+            $produto = Produto::create([
+                'nome'=>$request->nome,
+                'descricao'=>$request->descricao,
+                'categoria_id'=>$request->categoria_id,
+                'preco'=>$request->preco,
+                'foto'=>$foto,  
+            ]);
+
+            return redirect(route('dashboard'));
+
+        }else{
+            return back()->with('fileError','Arquivo Inválido');
+        }
+        return back()->with('storeError','Ocorreu algum erro ao salvar');
     }
 
     /**
@@ -82,6 +108,7 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
+        Storage::delete($produto->foto);
         $produto->delete();
         return back();
     }

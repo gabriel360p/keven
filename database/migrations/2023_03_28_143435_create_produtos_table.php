@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao');
+            $table->text('foto');
             $table->float('preco');
             $table->foreignId('categoria_id')->constrained()->onUpdate('cascade');
             $table->timestamps();
